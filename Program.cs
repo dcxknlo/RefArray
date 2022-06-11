@@ -2,11 +2,10 @@
 {
 	static void Main(string[] args)
 	{
-		StretchyArray<int> sa = new StretchyArray<int>(5);
-		List2<int> list = new List2<int>();
-		list.Add(10);
-		ref int item = ref list._items[0];
+		RefList<int> stretchyArray = new RefList<int>(5);
+		stretchyArray.Add(1);
+		ref int test = ref stretchyArray[0];
 
-		Console.WriteLine("Hello World!");
+		Console.WriteLine(test);
 	}
 }
