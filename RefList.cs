@@ -1,3 +1,8 @@
+/// <summary>
+/// Minimal implementation of a List that can access its elements by index.
+/// Use version to verify it has not been modified.
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class RefList<T>
 {
 	public int Capacity { get; private set; }
@@ -27,6 +32,12 @@ public class RefList<T>
 		}
 	}
 
+	/// <summary>
+	/// Allows indexed access to underlying array by ref.
+	/// </summary>
+	/// <param name="index"></param>
+	/// <returns></returns>
+	/// <exception cref="IndexOutOfRangeException"></exception>
 	public ref T this[int index]
 	{
 		get
@@ -39,18 +50,20 @@ public class RefList<T>
 		}
 	}
 
-	public T[] GetArray()
-	{
-		_version++;
-		return _items;
-	}
-
+	/// <summary>
+	/// Gets array of items as a readonly span.
+	/// </summary>
+	/// <returns></returns>
 	public ReadOnlySpan<T> GetSpan()
 	{
 		_version++;
 		return _items.AsSpan(0, Count);
 	}
 
+	/// <summary>
+	/// Adds an item to the end of the list.
+	/// </summary>
+	/// <param name="item"></param>
 	public void Add(T item)
 	{
 		if (Count == _items.Length)
@@ -64,6 +77,10 @@ public class RefList<T>
 		_version++;
 	}
 
+	/// <summary>
+	/// Removes the first occurrence of a specific object from the list.
+	/// </summary>
+	/// <param name="item"></param>
 	public void Remove(T item)
 	{
 		int index = Array.IndexOf(_items, item);
@@ -73,6 +90,11 @@ public class RefList<T>
 		}
 	}
 
+	/// <summary>
+	/// Removes the element at the specified index of the list.
+	/// </summary>
+	/// <param name="index"></param>
+	/// <exception cref="IndexOutOfRangeException"></exception>
 	public void RemoveAt(uint index)
 	{
 		if (index >= Count)
@@ -89,7 +111,9 @@ public class RefList<T>
 		_version++;
 	}
 
-	// Clears the contents of List.
+	/// <summary>
+	/// Clears the RefList
+	/// </summary>
 	public void Clear()
 	{
 		if (Count > 0)
